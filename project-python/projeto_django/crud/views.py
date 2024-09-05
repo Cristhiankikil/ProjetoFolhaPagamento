@@ -49,6 +49,59 @@ def getEmpresa(request):
     print(empresa)
     return render(request, 'templates/folhinha/empresaCad.html', {'empresa':empresa})
 
+def addEmpresa(request):
+    if request.method == 'POST':
+            empresa = Empresa()
+
+            empresa.nome = request.POST['nome']
+            empresa.email = request.POST['email']
+            empresa.endereco = request.POST['endereco']
+            empresa.telefone = request.POST['telefone']
+            empresa.cnpj = request.POST['cnpj']
+
+            empresa.save()
+            
+            return redirect('/crud/getEmpresa')
+
+
+@csrf_exempt
+def deleteempresa(request, empresa_id):
+    if request.method == "POST":
+        empresa = get_object_or_404(Empresa, id=empresa_id)
+        empresa.delete()
+        return redirect('/crud/getEmpresa')
+    
+@csrf_exempt
+def editEmpresa(request):
+    if request.method =='POST':
+        try:
+            empresas = Empresa.objects.filter(pk=request.POST['id'])
+            empresa = empresas.first()
+            empresa.nome = request.POST['nome']
+            empresa.email = request.POST['email']
+            empresa.endereco = request.POST['endereco']
+            empresa.telefone = request.POST['telefone']
+            empresa.cnpj = request.POST['cnpj']
+
+            empresa.save()
+            return redirect('/crud/getEmpresa')
+        except:
+            if empresa.exists():
+                return HttpResponse("Error on save.", status=404)
+            else:
+                return HttpResponse("Person does not exist.", status=404)
+           
+
+
+
+
+
+
+
+
+
+
+
 def getCargo(request):
     cargo = Cargo.objects.all().values()
     print(cargo)

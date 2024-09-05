@@ -26,5 +26,9 @@ urlpatterns = [
     path('crud/addperson', addperson, name='add_person'),
     path('crud/deleteperson/<int:person_id>', deleteperson, name='delete_person'),
     path('crud/editPerson', editPerson, name='edit_person'),
-    path('crud/getEmpresa', getperson, name='get_person'),
+   
+    path('crud/getEmpresa', getEmpresa, name='get_empresa'),
+    path('crud/addEmpresa', addEmpresa, name='add_empresa'),
+    path('crud/deleteEmpresa/<int:empresa_id>', deleteempresa, name='delete_empresa'),
+    path('crud/editEmpresa', editEmpresa, name='edit_empresa'),
 ]

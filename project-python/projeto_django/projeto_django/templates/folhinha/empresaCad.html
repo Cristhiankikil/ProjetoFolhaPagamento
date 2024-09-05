@@ -8,9 +8,9 @@
 <body>
     <div class="formularioPessoas">
         <h2>Cadastro de Empresa</h2>
-        <form  id="formsave" action="/crud/addperson" method="POST">
+        <form  id="formsave" action="/crud/addEmpresa" method="POST">
             {% csrf_token %}
-            <input style="visibility: hidden;" type="text"id="id" name="id" value=""><br>
+            <input style="visibility: hidden;" type="text" id="id" name="id" value=""><br>
             <label for="nome">Nome:</label><br>
             <input type="text" id="nome" class="nome" name="nome"><br><br>
 
@@ -29,32 +29,34 @@
             <input type="submit" value="Salvar">
         </form>
     </div>
-    <h1>Tabela de Pessoas</h1>
+
+    <h1>Tabela de Empresas</h1>
     <div class="tabelinha">
     <table id="myTable">
         <thead>
             <tr>
-                <th>Primeiro Nome</th>
-                <th>Sobrenome</th>
-                <th>Opções</th>
+                <th>Nome da Empresa</th>
+                <th>CNPJ</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            {% for p in person %}
-            <tr id="person-{{ p.id }}">
-                <td>{{ p.id }}</td>
-                <td>{{ p.first_name }}</td>
-                <td>{{ p.last_name }}</td>
+            {% for p in empresa %}
+            <tr id="empresa-{{ p.id }}">
+                <td>{{ p.nome }}</td>
+                <td>{{ p.cnpj }}</td>
+                <td>{{ p.telefone }}</td>
+                <td>{{ p.email }}</td>
+                <td>{{ p.endereco }}</td>
                 <td>
-                    <form action="/crud/deleteperson/{{ p.id }}" method="POST" style="display:inline;">
+                    <form action="/crud/deleteEmpresa/{{ p.id }}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="botaoT">Deletar</button>
                     </form>
-                    <form>
-                        <input  type="hidden" name="person_id" value="{{ p.id }}">
-                        <button type="button" class="botaoT" onclick="editPerson('{{ p.id }}')">Editar</button>
-                    </form>
-                    </form>
+                    <button type="button" class="botaoT" onclick="editEmpresa('{{ p.id }}')">Editar</button>
                 </td>
             </tr>
             {% endfor %}
@@ -62,29 +64,40 @@
     </table>
 </div>
 
-    <script>
-        function editPerson(personId) {
-            var table = document.getElementById("myTable");
-            var rows = table.rows;
-    
-            for (var i = 1; i < rows.length; i++) {
-                var idCell = rows[i].cells[0]; // A primeira célula contém o ID
-                var id = idCell.innerText.trim();
-    
-                if (id === personId.toString()) {
-                    var firstName = rows[i].cells[1].innerText.trim();
-                    var lastName = rows[i].cells[2].innerText.trim();
-    
-                    document.getElementById("id").value = personId;
-                    document.getElementById("first_name").value = firstName;
-                    document.getElementById("last_name").value = lastName;
-                    document.getElementById("formsave").action = "/crud/editPerson";
-    
-                    break;
-                }
+<script>
+    function editEmpresa(empresaId) {
+        
+        var table = document.getElementById("myTable");
+        var rows = table.rows;
+
+        
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i]; 
+            var idHiddenField = row.id.split('-')[1]; 
+
+            if (idHiddenField === empresaId.toString()) {
+               
+                var nome = row.cells[0].innerText.trim();
+                var cnpj = row.cells[1].innerText.trim();
+                var telefone = row.cells[2].innerText.trim();
+                var email = row.cells[3].innerText.trim();
+                var endereco = row.cells[4].innerText.trim();
+
+                
+                document.getElementById("id").value = empresaId;
+                document.getElementById("nome").value = nome;
+                document.getElementById("cnpj").value = cnpj;
+                document.getElementById("telefone").value = telefone;
+                document.getElementById("email").value = email;
+                document.getElementById("endereco").value = endereco;
+
+                
+                document.getElementById("formsave").action = "/crud/editEmpresa";
+
+                break;
             }
         }
-    </script>
+    }
+</script>
 </body>
-
 </html>
