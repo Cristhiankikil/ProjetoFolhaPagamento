@@ -1,0 +1,136 @@
+
+body {
+    background-color: #4B0082;
+    font-family: 'Arial', sans-serif;
+    color: #1f0023;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+h1 {
+    text-align: center;
+    color: #FFFFFF;
+    margin: 20px 0;
+}
+h6{
+    text-align: center;
+    transition: 0.3s;
+}h6:hover{
+    color: #e100ff;
+    font-family: serif;
+}
+
+
+.tabelinha {
+    width: 90%;
+    max-width: 800px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#myTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#myTable thead th {
+    background-color: #6A5ACD;
+    color: #FFFFFF;
+    padding: 12px 15px;
+    position: sticky;
+    top: 0;
+}
+
+#myTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#myTable tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+#myTable tbody tr:last-of-type {
+    border-bottom: 2px solid #6A5ACD;
+}
+
+#myTable tbody td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.botaoT {
+    background-color: #6A5ACD;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.botaoT:hover {
+    background-color: #483D8B;
+}
+
+.formularioPessoas {
+    width: 90%;
+    max-width: 800px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.formularioPessoas h2 {
+    color: #4B0082;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.formularioPessoas label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4B0082;
+}
+
+.formularioPessoas input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #6A5ACD;
+    border-radius: 4px;
+}
+
+.formularioPessoas input[type="submit"] {
+    background-color: #6A5ACD;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.formularioPessoas input[type="submit"]:hover {
+    background-color: #483D8B;
+    color: azure;
+}

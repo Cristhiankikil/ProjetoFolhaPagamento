@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabela de Pessoas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+    <div class="formularioPessoas">
+        <h2>Formulário de Informações de Pessoas</h2>
+        <h6>Feito por Cristhian F. Mendes</h6>
+        <form  id="formsave" action="/crud/addperson" method="POST">
+            {% csrf_token %}
+            <input style="visibility: hidden;" type="text"id="id" name="id" value=""><br>
+            <label for="first_name">Primeiro Nome:</label><br>
+            <input type="text" id="first_name" class="first_name" name="first_name"><br><br>
+
+            <label for="last_name">Último Nome:</label><br>
+            <input type="text" id="last_name" class="last_name" name="last_name"><br><br>
+
+            <input type="submit" value="Salvar">
+        </form>
+    </div>
+    <h1>Tabela de Pessoas</h1>
+    <div class="tabelinha">
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Primeiro Nome</th>
+                <th>Sobrenome</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in person %}
+            <tr id="person-{{ p.id }}">
+                <td>{{ p.id }}</td>
+                <td>{{ p.first_name }}</td>
+                <td>{{ p.last_name }}</td>
+                <td>
+                    <form action="/crud/deleteperson/{{ p.id }}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="botaoT">Deletar</button>
+                    </form>
+                    <form>
+                        <input  type="hidden" name="person_id" value="{{ p.id }}">
+                        <button type="button" class="botaoT" onclick="editPerson('{{ p.id }}')">Editar</button>
+                    </form>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    <script>
+        function editPerson(personId) {
+            var table = document.getElementById("myTable");
+            var rows = table.rows;
+    
+            for (var i = 1; i < rows.length; i++) {
+                var idCell = rows[i].cells[0]; // A primeira célula contém o ID
+                var id = idCell.innerText.trim();
+    
+                if (id === personId.toString()) {
+                    var firstName = rows[i].cells[1].innerText.trim();
+                    var lastName = rows[i].cells[2].innerText.trim();
+    
+                    document.getElementById("id").value = personId;
+                    document.getElementById("first_name").value = firstName;
+                    document.getElementById("last_name").value = lastName;
+                    document.getElementById("formsave").action = "/crud/editPerson";
+    
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
