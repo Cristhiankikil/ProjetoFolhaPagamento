@@ -13,7 +13,7 @@ class Empresa(models.Model):
     telefone = models.CharField(max_length=20)
     email = models.CharField(max_length=20)
     endereco = models.CharField(max_length=20)
-    setor = models.CharField(max_length=20)
+    
 
     def __str__(self):
         return self.nome
