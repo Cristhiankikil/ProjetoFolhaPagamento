@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabela de Pessoas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+    <div class="formularioPessoas">
+        <h2>Cadastro de Empresa</h2>
+        <form  id="formsave" action="/crud/addEmpresa" method="POST">
+            {% csrf_token %}
+            <input style="visibility: hidden;" type="text" id="id" name="id" value=""><br>
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" class="nome" name="nome"><br><br>
+
+            <label for="cnpj">Cnpj:</label><br>
+            <input type="text" id="cnpj" class="cnpj" name="cnpj"><br><br>
+
+            <label for="telefone">Telefone:</label><br>
+            <input type="text" id="telefone" class="telefone" name="telefone"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" class="email" name="email"><br><br>
+
+            <label for="endereco">Endereço:</label><br>
+            <input type="text" id="endereco" class="endereco" name="endereco"><br><br>
+
+            <input type="submit" value="Salvar">
+        </form>
+    </div>
+
+    <h1>Tabela de Empresas</h1>
+    <div class="tabelinha">
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Nome da Empresa</th>
+                <th>CNPJ</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in empresa %}
+            <tr id="empresa-{{ p.id }}">
+                <td>{{ p.nome }}</td>
+                <td>{{ p.cnpj }}</td>
+                <td>{{ p.telefone }}</td>
+                <td>{{ p.email }}</td>
+                <td>{{ p.endereco }}</td>
+                <td>
+                    <form action="/crud/deleteEmpresa/{{ p.id }}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="botaoT">Deletar</button>
+                    </form>
+                    <button type="button" class="botaoT" onclick="editEmpresa('{{ p.id }}')">Editar</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function editEmpresa(empresaId) {
+        
+        var table = document.getElementById("myTable");
+        var rows = table.rows;
+
+        
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i]; 
+            var idHiddenField = row.id.split('-')[1]; 
+
+            if (idHiddenField === empresaId.toString()) {
+               
+                var nome = row.cells[0].innerText.trim();
+                var cnpj = row.cells[1].innerText.trim();
+                var telefone = row.cells[2].innerText.trim();
+                var email = row.cells[3].innerText.trim();
+                var endereco = row.cells[4].innerText.trim();
+
+                
+                document.getElementById("id").value = empresaId;
+                document.getElementById("nome").value = nome;
+                document.getElementById("cnpj").value = cnpj;
+                document.getElementById("telefone").value = telefone;
+                document.getElementById("email").value = email;
+                document.getElementById("endereco").value = endereco;
+
+                
+                document.getElementById("formsave").action = "/crud/editEmpresa";
+
+                break;
+            }
+        }
+    }
+</script>
+</body>
+</html>
